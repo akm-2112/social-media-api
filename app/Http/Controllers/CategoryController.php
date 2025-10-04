@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -22,7 +23,9 @@ class CategoryController extends Controller
     }
 
     public function store(Request $request)
-    {
+    {   
+        $this->authorize('create', $request);
+        
         $request->validate([
             'name' => 'required | string | max:255 | unique',
         ]);
@@ -34,8 +37,9 @@ class CategoryController extends Controller
         ],201);
     }
 
-    /*public function update(Request $request, Category $category)
-    {
+    public function update(Request $request, Category $category)
+    {   
+        $this->authorize('update',$request);
         $request->validate([
             'name' => 'required | string | max:255 | unique',
         ]);
@@ -46,9 +50,10 @@ class CategoryController extends Controller
             'category' => $category,
         ],200);
     }
-    */
-    public function destroy(Category $category)
-    {
+    
+    public function destroy(Category $category, User $user)
+    {   
+        $this->authorize('delete', $category);
         $category->delete();
         return response()->json([
             'message' => 'Category Deleted',

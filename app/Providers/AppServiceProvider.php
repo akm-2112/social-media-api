@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\User;
+use App\Policies\CategoryPolicy;
 use App\Policies\CommentPolicy;
 use App\Policies\LikePolicy;
 use App\Policies\PostPolicy;
@@ -35,5 +37,6 @@ class AppServiceProvider extends ServiceProvider
         Post::class => PostPolicy::class,
         Like::class => LikePolicy::class,
         Comment::class => CommentPolicy::class,
+        Category::class => CategoryPolicy::class,
     ];
 }
